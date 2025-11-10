@@ -1,5 +1,5 @@
 MODEL:
-  PRETRAIN_CHOICE: 'imagenet'
+  PRETRAIN_CHOICE: 'imagenet' # If you are using pre-trained raw weights, such as those named ‘transformer_60.pth’, set this option to ‘clip’.
   PRETRAIN_PATH: 'weights/vit_b512_pre.pth'
   METRIC_LOSS_TYPE: 'triplet'
   IF_LABELSMOOTH: 'off'

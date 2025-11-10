@@ -149,9 +149,6 @@ class build_transformer(nn.Module):
                                                             sse=cfg.MODEL.SSE)
         else:
             raise ValueError('Unsupported model type: {}'.format(cfg.MODEL.TRANSFORMER_TYPE))
-        if pretrain_choice == 'imagenet':
-            self.base.load_param(model_path)
-            print('Loading pretrained model......from {}'.format(model_path))
 
         self.num_classes = num_classes
         self.ID_LOSS_TYPE = cfg.MODEL.ID_LOSS_TYPE
@@ -182,14 +179,22 @@ class build_transformer(nn.Module):
         self.train_pair = False
         self.logit_scale = nn.Parameter(torch.tensor(logit_scale_init_value))
 
+        if pretrain_choice == 'imagenet':
+            self.base.load_param(model_path)
+            print('Loading pretrained model from {}'.format(model_path))
+        elif pretrain_choice == 'clip':
+            self.load_param(model_path)
+            print('Loading pretrained model from {}'.format(model_path))
+        elif pretrain_choice == False:
+            print('Training transformer from scratch.')
+        else:
+            raise ValueError('Unsupported pretrain_choice: {}'.format(pretrain_choice))
 
     def train_with_pair(self,):
         self.train_pair = True
 
-
     def train_with_single(self,):
         self.train_pair = False
-
 
     def forward(self, x, label=None, cam_label= None, img_wh=None):
         global_feat = self.base(x, cam_label=cam_label, img_wh=img_wh)
@@ -224,13 +229,17 @@ class build_transformer(nn.Module):
                 # print("Test with feature before BN")
                 return global_feat
 
-
     def load_param(self, trained_path):
         param_dict = torch.load(trained_path)
+        if "state_dict" in param_dict:
+            param_dict = param_dict["state_dict"]
+        # print(self.state_dict().keys())
         for i in param_dict:
-            self.state_dict()[i.replace('module.', '')].copy_(param_dict[i])
-        print('Loading pretrained model from {}'.format(trained_path))
-
+            key = i.replace('module.', '')
+            # skip classifier params
+            if key.startswith('classifier'):
+                continue
+            self.state_dict()[key].copy_(param_dict[i])
 
     def load_param_finetune(self, model_path):
         param_dict = torch.load(model_path)

@@ -68,14 +68,13 @@ python test.py --config_file configs/hoss_transoss.yml MODEL.DEVICE_ID "('0')"  
 
 ## Citation
 ```
-@misc{wang2025crossmodal,
-      title={Cross-modal Ship Re-Identification via Optical and SAR Imagery: A Novel Dataset and Method}, 
-      author={Han Wang and Shengyang Li and Jian Yang and Yuxuan Liu and Yixuan Lv and Zhuang Zhou},
-      year={2025},
-      eprint={2506.22027},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2506.22027}, 
+@InProceedings{Wang_2025_ICCV,
+    author    = {Wang, Han and Li, Shengyang and Yang, Jian and Liu, Yuxuan and Lv, Yixuan and Zhou, Zhuang},
+    title     = {Cross-modal Ship Re-Identification via Optical and SAR Imagery: A Novel Dataset and Method},
+    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+    month     = {October},
+    year      = {2025},
+    pages     = {7873-7883}
 }
 ```
 
