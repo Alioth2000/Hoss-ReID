@@ -149,8 +149,21 @@ def make_dataloader_pair(cfg):
 
     if cfg.SOLVER.IMS_PER_BATCH % 2 != 0:
         raise ValueError("cfg.SOLVER.IMS_PER_BATCH should be even number")
-    train_loader_pair = DataLoader(
-        train_set_pair, batch_size=int(cfg.SOLVER.IMS_PER_BATCH / 2), shuffle=True, num_workers=num_workers, 
-        collate_fn=train_pair_collate_fn
-    )
+    if cfg.MODEL.DIST_TRAIN:
+        sampler = torch.utils.data.distributed.DistributedSampler(train_set_pair)
+        train_loader_pair = DataLoader(
+            train_set_pair,
+            batch_size=int(cfg.SOLVER.IMS_PER_BATCH / 2),
+            sampler=sampler,
+            num_workers=num_workers,
+            collate_fn=train_pair_collate_fn,
+        )
+    else:
+        train_loader_pair = DataLoader(
+            train_set_pair,
+            batch_size=int(cfg.SOLVER.IMS_PER_BATCH / 2),
+            shuffle=True,
+            num_workers=num_workers,
+            collate_fn=train_pair_collate_fn,
+        )
     return train_loader_pair, num_classes, cam_num

@@ -41,6 +41,8 @@ def do_train_pair(cfg, model, train_loader_pair, optimizer, scheduler, local_ran
             loss_meter.reset()
             scheduler.step(epoch)
             model.train()
+            if hasattr(train_loader_pair, "sampler") and hasattr(train_loader_pair.sampler, "set_epoch"):
+                train_loader_pair.sampler.set_epoch(epoch)
             for n_iter, (img, vid, target_cam) in enumerate(train_loader_pair):
                 optimizer.zero_grad()
                 img = img.to(device)

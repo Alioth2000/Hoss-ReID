@@ -1,6 +1,6 @@
 #  Cross-modal Ship Re-identification via Optical and SAR Imagery: A Novel Dataset and Method
 
-### [**📝Paper**](https://arxiv.org/abs/2506.22027) | [**🗃️Dataset**](https://zenodo.org/records/15860212) | [**🤖Models**](https://huggingface.co/Alioth2000/TransOSS/tree/main)
+### [**📝Paper**](https://openaccess.thecvf.com/content/ICCV2025/htmlWang_Cross-modal_Ship_Re-Identification_via_Optical_and_SAR_Imagery_A_Novel_ICCV_2025_paper.html) | [**🗃️Dataset**](https://zenodo.org/records/15860212) | [**🤖Models**](https://huggingface.co/Alioth2000/TransOSS/tree/main)
 The official repository for HOSS ReID Dataset and TransOSS.
 
 ## Abstract
