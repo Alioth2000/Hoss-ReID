@@ -69,9 +69,7 @@ def do_train_pair(cfg, model, train_loader_pair, optimizer, scheduler, local_ran
 
             end_time = time.time()
             time_per_batch = (end_time - start_time) / (n_iter + 1)
-            if cfg.MODEL.DIST_TRAIN:
-                pass
-            else:
+            if not cfg.MODEL.DIST_TRAIN or dist.get_rank() == 0:
                 logger.info(
                     "Epoch {} done. Time per batch: {:.3f}[s] Speed: {:.1f}[samples/s]".format(
                         epoch, time_per_batch, train_loader_pair.batch_size / time_per_batch
