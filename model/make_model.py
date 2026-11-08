@@ -15,7 +15,7 @@ def shuffle_unit(features, shift, group, begin=1):
     # Patch Shuffle Operation
     try:
         x = x.view(batchsize, group, -1, dim)
-    except:
+    except RuntimeError:
         x = torch.cat([x, x[:, -2:-1, :]], dim=1)
         x = x.view(batchsize, group, -1, dim)
 
